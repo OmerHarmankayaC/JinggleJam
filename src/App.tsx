@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Scene from './Scene';
-import HappyNewYear from './HappyNewYear';
-
 import KangarooGame from './kangaroo-jump/KangarooGame';
 import SessizSinemaGame from './SessizSinemaGame/SessizSinemaGame';
 import ReindeerOverlay from './ReindeerOverlay';
@@ -11,7 +9,7 @@ import GrandFinale from './GrandFinale';
 import bgMusic from './weJamMusic.m4a';
 
 const App: React.FC = () => {
-  const [page, setPage] = useState<'home' | 'success' | 'kangaroo' | 'sessizsinema' | 'testjam' | 'finale'>('home');
+  const [page, setPage] = useState<'home' | 'kangaroo' | 'sessizsinema' | 'testjam' | 'finale'>('home');
   const [completedMissions, setCompletedMissions] = useState<string[]>([]);
   const [showWelcome, setShowWelcome] = useState(true);
   const audioRef = React.useRef<HTMLAudioElement>(null);
@@ -81,7 +79,7 @@ const App: React.FC = () => {
           <audio ref={audioRef} src={bgMusic} loop />
           {showWelcome && <WelcomeModal onStart={handleStart} />}
           <Scene
-            onSuccess={() => setPage('success')} // Original end game (now replaced by finale?)
+            onSuccess={() => {/* No-op, finale handled by mission complete logic */ }}
             onMissionStart={handleMissionStart}
             completedMissions={completedMissions}
           />
@@ -98,7 +96,6 @@ const App: React.FC = () => {
         <TestJamGame onComplete={() => handleMissionComplete('turkey')} />
       )}
       {page === 'finale' && <GrandFinale onRestart={handleRestart} />}
-      {page === 'success' && <HappyNewYear />}
     </div>
   );
 };

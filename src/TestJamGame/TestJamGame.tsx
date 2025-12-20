@@ -1,10 +1,10 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './TestJamGame.css';
 
 // Import Assets
 import gingerbreadImg from './assets/gingerbread.png';
-import starImg from './assets/star.png';
+// import starImg from './assets/star.png';
 import opNeutral from './assets/operator_neutral.png';
 import opHappy from './assets/operator_happy.png';
 import opSurprised from './assets/operator_surprised.png';
@@ -32,7 +32,7 @@ const TestJamGame: React.FC<TestJamGameProps> = ({ onComplete }) => {
     // Slots: 0: 0px, 1: 260px, 2: 520px (approx based on original CSS stride)
     const slotPositions = [0, 260, 520];
 
-    const speechTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const speechTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const showSpeech = (text: string) => {
         setSpeechText(text);

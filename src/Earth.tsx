@@ -56,8 +56,8 @@ const Earth: React.FC<EarthProps> = (props) => {
   };
 
   useFrame((state) => {
-    const { clock, raycaster, camera, pointer } = state;
-    const time = clock.getElapsedTime();
+    const { raycaster, camera, pointer } = state;
+    // const time = clock.getElapsedTime();
 
     // 1. Rotate Earth
     if (earthRef.current) {

@@ -94,6 +94,7 @@ const Glitter: React.FC<GlitterProps> = ({ targetWrapper }) => {
                     array={particlesData.positions}
                     itemSize={3}
                     usage={THREE.DynamicDrawUsage}
+                    args={[particlesData.positions, 3]}
                 />
                 <bufferAttribute
                     attach="attributes-color"
@@ -101,6 +102,7 @@ const Glitter: React.FC<GlitterProps> = ({ targetWrapper }) => {
                     array={new Float32Array(count * 3)}
                     itemSize={3}
                     usage={THREE.DynamicDrawUsage}
+                    args={[new Float32Array(count * 3), 3]}
                 />
             </bufferGeometry>
             <pointsMaterial

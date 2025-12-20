@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import type { ThreeElements } from '@react-three/fiber';
 import * as THREE from 'three';
 

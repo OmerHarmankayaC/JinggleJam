@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import './GrandFinale.css';
-import GiftBox from './SessizSinemaGame/components/GiftBox'; // Taking a shortcut reuse or SVG
+// import GiftBox from '../../earth-map copy/SessizSinemaGame/components/GiftBox'; // Taking a shortcut reuse or SVG
 
 interface GrandFinaleProps {
     onRestart: () => void;
