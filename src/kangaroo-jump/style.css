@@ -1,0 +1,346 @@
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --text-color: #ffffff;
+    --font-family: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #1a1a2e;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 800px;
+    height: 400px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+    /* Fallback */
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('sea-background.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* UI Elements */
+.score-board {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-color);
+    z-index: 100;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.start-screen,
+.game-over-screen,
+.win-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 101;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    color: white;
+    width: 300px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, var(--primary-color), #ff8e8e);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: var(--font-family);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* Game Objects */
+.kangaroo {
+    position: absolute;
+    bottom: 20px;
+    /* Ground level */
+    left: 50px;
+    width: 180px;
+    /* Larger size */
+    height: 180px;
+    background-image: url('kangaroo-latest.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10;
+    /* For debugging collision box */
+    /* border: 1px solid red; */
+}
+
+/* Jump Animation Class */
+.jump {
+    animation: jump-animation 1.0s ease-out;
+}
+
+@keyframes jump-animation {
+    0% {
+        bottom: 20px;
+    }
+
+    50% {
+        bottom: 250px;
+    }
+
+    /* Higher jump for surfing style */
+    100% {
+        bottom: 20px;
+    }
+}
+
+.wave {
+    position: absolute;
+    bottom: -20px;
+    /* Lower position */
+    width: 120px;
+    /* Bigger size */
+    height: 120px;
+    background-image: url('wave-latest.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 10;
+    left: 800px;
+    /* Start off-screen */
+    /* border: 1px solid blue; */
+}
+
+/* ... existing styles ... */
+
+.merry-text {
+    font-size: 1.5rem;
+    /* Smaller font for long text */
+    color: #ffcc00;
+    /* Gold text */
+    text-shadow: 0 0 10px #e74c3c;
+    font-family: 'Great Vibes', cursive, serif;
+    /* Or fallback */
+    animation: pulse 2s infinite;
+    max-width: 80%;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Christmas Surprise Styles */
+#surprise-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    /* Dark overlay */
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gift-box-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 0.5rem;
+    /* Reduced margin */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+/* ... existing styles ... */
+
+.merry-text {
+    font-size: 1.2rem;
+    /* Even smaller for very long text */
+    color: #ffcc00;
+    /* Gold text */
+    text-shadow: 0 0 10px #e74c3c;
+    font-family: 'Great Vibes', cursive, serif;
+    /* Or fallback */
+    animation: pulse 2s infinite;
+    max-width: 95%;
+    /* More width */
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 10px;
+}
+
+.gift-box {
+    position: relative;
+    width: 150px;
+    height: 120px;
+    z-index: 2;
+}
+
+.gift-body {
+    width: 100%;
+    height: 100%;
+    background: #e74c3c;
+    /* Red */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.gift-lid {
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    width: 170px;
+    height: 30px;
+    background: #c0392b;
+    /* Darker Red */
+    border-radius: 5px;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Ribbons */
+.ribbon-vertical-body {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 100%;
+    background: #f1c40f;
+    /* Gold */
+}
+
+.ribbon-horizontal {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 30px;
+    background: #f1c40f;
+    /* Gold */
+    /* Actually let's make ribbon simple */
+    display: none;
+    /* Simplify lid ribbon */
+}
+
+.gift-lid::before {
+    /* Vertical ribbon on lid */
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 100%;
+    background: #f1c40f;
+}
+
+/* Star */
+.christmas-star {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50px;
+    /* Inside box */
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    z-index: 1;
+    /* Behind box initially */
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.merry-text {
+    font-size: 1rem;
+    /* Much smaller for long text */
+    color: #ffcc00;
+    /* Gold text */
+    text-shadow: 0 0 5px #e74c3c;
+    font-family: 'Great Vibes', cursive, serif;
+    /* Or fallback */
+    animation: pulse 2s infinite;
+    max-width: 90%;
+    margin: 0 auto;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+/* Animation States */
+.open-gift .gift-lid {
+    transform: translateY(-60px) rotate(-10deg);
+}
+
+.open-gift .christmas-star {
+    top: -120px;
+    /* Pop out */
+    transform: translateX(-50%) scale(1.5) rotate(360deg);
+    z-index: 4;
+    /* In front of box now */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

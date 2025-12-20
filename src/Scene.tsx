@@ -6,9 +6,11 @@ import Snow from './Snow';
 
 interface SceneProps {
     onSuccess?: () => void;
+    onMissionStart?: (id: string) => void;
+    completedMissions?: string[];
 }
 
-const Scene: React.FC<SceneProps> = ({ onSuccess }) => {
+const Scene: React.FC<SceneProps> = ({ onSuccess, onMissionStart, completedMissions }) => {
     return (
         <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
             <Suspense fallback={null}>
@@ -16,7 +18,11 @@ const Scene: React.FC<SceneProps> = ({ onSuccess }) => {
                 <pointLight position={[10, 10, 10]} intensity={2.5} />
                 <directionalLight position={[-5, 5, 5]} intensity={1.5} />
                 <Stars radius={300} depth={60} count={5000} factor={7} saturation={0} fade speed={1} />
-                <Earth onSuccess={onSuccess} />
+                <Earth
+                    onSuccess={onSuccess}
+                    onMissionStart={onMissionStart}
+                    completedMissions={completedMissions}
+                />
                 <Snow />
                 <OrbitControls
                     enablePan={false}

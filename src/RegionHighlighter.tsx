@@ -158,8 +158,10 @@ const RegionHighlighter: React.FC<RegionHighlighterProps> = ({
 
     const handleClick = (e: any) => {
         e.stopPropagation();
-        if (onClick && geometry.boundingSphere) {
-            onClick(geometry.boundingSphere.center);
+        if (onClick) {
+            // Pass the intersection point (World Space) directly
+            // This is more accurate than the bounding sphere center
+            onClick(e.point);
         }
     };
 

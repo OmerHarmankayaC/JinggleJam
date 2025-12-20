@@ -12,6 +12,8 @@ import Glitter from './Glitter';
 
 interface EarthProps {
   onSuccess?: () => void;
+  onMissionStart?: (id: string) => void;
+  completedMissions?: string[];
 }
 
 const Earth: React.FC<EarthProps> = (props) => {
@@ -34,23 +36,21 @@ const Earth: React.FC<EarthProps> = (props) => {
   // Flight State
   const [flightState, setFlightState] = React.useState<'orbiting' | 'flying' | 'arrived'>('orbiting');
   const targetPosition = useRef<THREE.Vector3 | null>(null);
+  const targetCountryId = useRef<string | null>(null);
   const wanderTarget = useRef<THREE.Vector3 | null>(null);
 
+  const handleCountryClick = (worldPoint: THREE.Vector3, countryId: string) => {
+    // The point passed is now in WORLD Space.
+    // We need to store coordinates relative to the Earth mesh (LOCAL Space)
+    // so that when Earth rotates, the target rotates with it.
 
+    if (flightState === 'orbiting' && earthRef.current) {
+      // Convert World -> Local
+      const localPoint = worldPoint.clone();
+      earthRef.current.worldToLocal(localPoint);
 
-  const handleCountryClick = (point: THREE.Vector3) => {
-    // Calculate world position of the click on the rotating earth surface
-    // The point passed from RegionHighlighter is relative to Earth mesh.
-    // But Earth mesh is rotating. So we need to calculate the actual WORLD target position at the moment of click?
-    // No, Santa moves in World Space (or Scene space).
-    // Earth rotates. If we fly to "Turkey", we fly to a moving target?
-    // Or does Santa stick to the surface?
-    // User said: "Santa flies to the country and waits there."
-    // Simplest approach: Santa enters 'flying' mode where he chases the target point which is rotating with Earth.
-
-    if (flightState === 'orbiting') {
-      // Store the LOCAL point on Earth
-      targetPosition.current = point.clone();
+      targetPosition.current = localPoint;
+      targetCountryId.current = countryId;
       setFlightState('flying');
     }
   };
@@ -67,36 +67,23 @@ const Earth: React.FC<EarthProps> = (props) => {
     if (santaRef.current) {
       if (flightState === 'orbiting') {
         // 2. Mouse Following Logic (Mathematical Ray-Sphere Intersection)
-        // This avoids issues with country meshes blocking the ray or providing inconsistent depth.
         raycaster.setFromCamera(pointer, camera);
         const ray = raycaster.ray;
         const target = new THREE.Vector3();
-
-        // Intersect with a virtual sphere of radius 2.5 (Earth Surface + Scale roughly)
-        // Earth scale is 2.5. So radius is 2.5.
-        // We want the point on the SURFACE (r=2.5).
-        // Ray: O + tD. Sphere: |P|^2 = R^2
         const sphereRadius = 2.5;
 
         // Simple ray-sphere intersection logic
-        // We assume sphere at 0,0,0
-        // a = D.dot(D) = 1 (if normalized)
-        // b = 2 * O.dot(D)
-        // c = O.dot(O) - R^2
-
         const O = ray.origin;
         const D = ray.direction;
         const b = 2 * O.dot(D);
         const c = O.dot(O) - sphereRadius * sphereRadius;
-        const d = b * b - 4 * c; // Discriminant
+        const d = b * b - 4 * c;
 
         if (d >= 0) {
-          // Hit!
-          const t = (-b - Math.sqrt(d)) / 2; // Closest hit
+          // Hit! (Cursor ON Earth)
+          const t = (-b - Math.sqrt(d)) / 2;
           if (t >= 0) {
             target.copy(O).add(D.clone().multiplyScalar(t));
-            // Convert to "TargetPos" we use for lerp (Radius ~2.7 usually for flight? No, target is usually surface)
-            // Let's set targetPos to this surface point.
           }
         } else {
           // Miss - Wander Logic
@@ -120,9 +107,8 @@ const Earth: React.FC<EarthProps> = (props) => {
           target.copy(wanderTarget.current);
         }
 
-        // Smoothing
+        // Smoothing for Santa
         const lerpSpeed = 0.01; // Slower movement (was 0.05)
-        // Logic: Move current Santa pos towards 'target' (projected to flight altitude)
         const currentPos = santaRef.current.position.clone();
 
         // We want target at Flight Altitude (2.7) for calculation
@@ -157,14 +143,19 @@ const Earth: React.FC<EarthProps> = (props) => {
         // Current position
         const currentPos = santaRef.current.position.clone();
 
-        // Direction towards target
-        const direction = new THREE.Vector3().subVectors(worldTarget, currentPos);
+        // Direction towards target from current flight altitude
+        // We need to compare "apples to apples" - distance at flight altitude.
+        // Otherwise Santa (r=2.7) never reaches Surface Target (r=2.5) within tolerance.
+        const flightAltitude = 2.7; // Standard orbit altitude
+
+        const worldTargetAtAltitude = worldTarget.clone().normalize().multiplyScalar(flightAltitude);
+        const direction = new THREE.Vector3().subVectors(worldTargetAtAltitude, currentPos);
         const dist = direction.length();
 
-        const speed = 0.02; // Slower speed (was 0.05)
-        const flightAltitude = 2.7; // Standard orbit altitude to maintain curve
+        const speed = 0.02; // Movement speed per frame
+        const arrivalThreshold = 0.1; // Distance tolerance (0.1 is safe for 2.7 radius)
 
-        if (dist < speed) {
+        if (dist < arrivalThreshold) {
           // Arrived
           // Set to target but pushed out by altitude offset for hovering
           const arrivalNormal = worldTarget.clone().normalize();
@@ -175,7 +166,16 @@ const Earth: React.FC<EarthProps> = (props) => {
 
           // Trigger Success after 1 second
           setTimeout(() => {
-            if (props.onSuccess) props.onSuccess();
+            if (targetCountryId.current === 'kangaroo' && props.onMissionStart) {
+              props.onMissionStart('kangaroo');
+            } else if (targetCountryId.current === 'canada' && props.onMissionStart) {
+              props.onMissionStart('canada');
+            } else if (targetCountryId.current === 'turkey' && props.onMissionStart) {
+              props.onMissionStart('turkey');
+            } else if (props.onSuccess) {
+              // Default success for others
+              // props.onSuccess(); 
+            }
           }, 1000);
         } else {
           // Move linearly then project back to sphere surface
@@ -224,6 +224,10 @@ const Earth: React.FC<EarthProps> = (props) => {
     }
   });
 
+  const getStatus = (id: string) => {
+    return props.completedMissions?.includes(id) ? 'completed' : 'pending';
+  };
+
   return (
     <group>
       {/* Earth Sphere - Rotating on its own */}
@@ -236,9 +240,9 @@ const Earth: React.FC<EarthProps> = (props) => {
           clearcoat={0.1}
           clearcoatRoughness={0.4}
         />
-        <RegionHighlighter geoJson={turkeyData} status="pending" altitude={1.01} onClick={handleCountryClick} />
-        <RegionHighlighter geoJson={australiaData} status="pending" altitude={1.01} onClick={handleCountryClick} />
-        <RegionHighlighter geoJson={canadaData} status="pending" altitude={1.03} onClick={handleCountryClick} />
+        <RegionHighlighter geoJson={turkeyData} status={getStatus('turkey')} altitude={1.01} onClick={(p) => handleCountryClick(p, 'turkey')} />
+        <RegionHighlighter geoJson={australiaData} status={getStatus('kangaroo')} altitude={1.01} onClick={(p) => handleCountryClick(p, 'kangaroo')} />
+        <RegionHighlighter geoJson={canadaData} status={getStatus('canada')} altitude={1.03} onClick={(p) => handleCountryClick(p, 'canada')} />
       </mesh>
 
       {/* Atmosphere Glow - Keep with Earth */}

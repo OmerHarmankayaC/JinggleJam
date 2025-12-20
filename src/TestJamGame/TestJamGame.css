@@ -1,0 +1,263 @@
+/* TestJamGame.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+
+.tj-container {
+    width: 100vw;
+    height: 100vh;
+    background: #1a1a1a;
+    /* Fallback */
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tj-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    /* Original used generic bg image, lets use gradient or we can use the copied asset if we import it */
+    z-index: 0;
+}
+
+.tj-operator-section {
+    position: absolute;
+    bottom: 0;
+    left: 1%;
+    height: 60%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.tj-operator-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* mix-blend-mode: multiply; Removed as it might look bad on dark gradient without white bg logic */
+}
+
+.tj-speech-bubble {
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    max-width: 300px;
+    text-align: center;
+}
+
+.tj-speech-bubble.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tj-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 15px 15px 0;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+.tj-stage {
+    position: absolute;
+    bottom: 20%;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.tj-boxes-container {
+    display: flex;
+    /* We handle positioning absolute for shuffling, so this container just sets the stage area center */
+    position: relative;
+    width: 800px;
+    /* Width to hold 3 boxes with gaps */
+    height: 200px;
+}
+
+.tj-box-wrapper {
+    width: 180px;
+    height: 168px;
+    position: absolute;
+    /* Changed to absolute for easier sliding animations */
+    cursor: pointer;
+    transition: transform 0.3s, left 0.4s ease-in-out;
+    /* 'left' transition handles the shuffling movement */
+    bottom: 0;
+}
+
+.tj-box-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.tj-box-body {
+    width: 100%;
+    height: 100%;
+    background: #ff4757;
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+    /* Was 2. Move to back so item can sit on it. */
+    box-shadow: inset 0 -10px 0 rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s;
+}
+
+.tj-box-lid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ff4757;
+    border-radius: 20px;
+    z-index: 3;
+    /* Topmost */
+    transform-origin: top;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), background 0.3s;
+    box-shadow: inset 0 5px 10px rgba(255, 255, 255, 0.3);
+}
+
+.tj-box-wrapper.open .tj-box-lid {
+    transform: rotateX(120deg);
+}
+
+.tj-box-wrapper.win .tj-box-body {
+    background: #2ecc71 !important;
+}
+
+.tj-box-wrapper.win .tj-box-lid {
+    background: #27ae60 !important;
+}
+
+.tj-item {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+    /* Was 1. Now between body and lid. */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tj-item.gingerbread {
+    /* Image url handled in inline style or class if asset structure works */
+    opacity: 1;
+}
+
+.tj-hud {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    z-index: 100;
+}
+
+.tj-score-board {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #ff4757;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tj-btn-primary {
+    background: #f1c40f;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #333;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #c29d0b, 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s, box-shadow 0.1s;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tj-btn-primary:active {
+    transform: translateY(5px);
+}
+
+.tj-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tj-star-effect {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 80px;
+    /* Increased size slightly */
+    height: 80px;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    /* Removed background-image */
+}
+
+.tj-box-wrapper.win .tj-star-effect {
+    opacity: 1;
+    transform: translate(-50%, -80px) scale(1.5) rotate(720deg);
+}
+
+/* Confetti */
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+    }
+}
+
+.tj-confetti {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    z-index: 999;
+    animation: confetti-fall 3s linear infinite;
+}

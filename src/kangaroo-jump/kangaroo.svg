@@ -1,0 +1,62 @@
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Fur Gradient for realistic depth -->
+        <radialGradient id="furGrad" cx="40%" cy="40%" r="70%" fx="30%" fy="30%">
+            <stop offset="0%" style="stop-color:#D68910;stop-opacity:1" /> <!-- Golden Brown -->
+            <stop offset="100%" style="stop-color:#873600;stop-opacity:1" /> <!-- Dark Brown -->
+        </radialGradient>
+        <!-- Lighter belly gradient -->
+        <linearGradient id="bellyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#F5CBA7;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#D68910;stop-opacity:1" />
+        </linearGradient>
+        <!-- Board Gradient -->
+        <linearGradient id="surfReal" x1="0%" y1="50%" x2="100%" y2="50%">
+            <stop offset="0%" style="stop-color:#F4D03F;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#F39C12;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#D35400;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Surfboard (Perspective view) -->
+    <path d="M20,130 Q75,145 130,125 Q135,123 125,120 Q70,130 25,125 Q15,123 20,130 Z" fill="url(#surfReal)" stroke="#7E5109" stroke-width="1"/>
+    <!-- Fin -->
+    <path d="M100,130 L95,140 L110,132 Z" fill="#922B21"/>
+
+    <!-- Kangaroo Tail -->
+    <path d="M45,100 Q20,110 10,90 Q15,85 45,95" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/>
+
+    <!-- Left Leg (Thigh) -->
+    <path d="M80,120 Q65,115 60,95 Q55,75 75,80" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/>
+    <!-- Left Foot -->
+    <path d="M80,120 L85,130 L105,130 L100,125 L85,120" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/>
+
+    <!-- Body (Torso and Back) -->
+    <path d="M75,90 Q80,110 85,115 L90,115 Q95,110 95,80 Q95,50 85,40 Q75,35 65,50 Q60,70 75,90" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/>
+    <!-- Belly Patch -->
+    <path d="M75,90 Q80,100 85,100 Q90,95 90,75 Q90,55 80,50" fill="url(#bellyGrad)" opacity="0.8"/>
+
+    <!-- Head & Neck -->
+    <path d="M85,45 Q95,35 95,25 Q95,15 88,15 Q80,15 75,25 Q70,35 85,45" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/>
+    
+    <!-- Ears -->
+    <path d="M78,18 Q70,0 75,5 Q80,10 82,18" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/> <!-- Left Ear -->
+    <path d="M92,18 Q100,0 95,5 Q90,10 88,18" fill="url(#furGrad)" stroke="#6E2C00" stroke-width="1"/> <!-- Right Ear -->
+    <path d="M79,16 Q75,5 77,8" fill="#F5B7B1" opacity="0.7"/> <!-- Inner Left -->
+    
+    <!-- Face Details -->
+    <circle cx="92" cy="22" r="2" fill="#000"/> <!-- Eye -->
+    <path d="M98,28 Q95,32 90,30" fill="none" stroke="#3E2723" stroke-width="1"/> <!-- Mouth -->
+    <path d="M100,25 Q98,24 96,26" fill="#3E2723"/> <!-- Nose -->
+
+    <!-- Arms (Natural Paws) -->
+    <!-- Left Arm (Back) -->
+    <path d="M85,55 Q75,65 70,60" fill="none" stroke="url(#furGrad)" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+    <circle cx="70" cy="60" r="4" fill="url(#furGrad)"/> <!-- Left Paw -->
+
+    <!-- Right Arm (Front) -->
+    <path d="M88,52 Q105,60 110,50" fill="none" stroke="url(#furGrad)" stroke-width="7" stroke-linecap="round"/>
+    <!-- Right Paw (Natural fingers hint) -->
+    <path d="M110,50 Q115,48 116,52 Q114,54 110,50" fill="url(#furGrad)"/>
+    <ellipse cx="111" cy="50" rx="4" ry="5" fill="url(#furGrad)"/>
+</svg>

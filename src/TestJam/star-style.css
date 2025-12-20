@@ -1,0 +1,26 @@
+/* CSS Changes for Star */
+
+.star-effect {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 60px;
+    height: 60px;
+    background: url('assets/star.png') no-repeat center center/contain;
+    z-index: 10;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+.box-wrapper.win .star-effect {
+    opacity: 1;
+    transform: translate(-50%, -80px) scale(1.5) rotate(720deg);
+}
+
+/* Also ensure processed images don't look weird */
+canvas {
+    display: none;
+    /* Hide processing canvas if any */
+}

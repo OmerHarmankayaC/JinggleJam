@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kangaroo Jump</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <div class="background"></div>
+        <div class="score-board">
+            <span>Score: <span id="score">0</span></span>
+        </div>
+        <div class="start-screen" id="start-screen">
+            <h1>Kangaroo Jump</h1>
+            <p>Press Space to Jump</p>
+            <button id="start-btn">Start Game</button>
+        </div>
+        <div class="game-over-screen hidden" id="game-over-screen">
+            <h1>Game Over</h1>
+            <p>Your Score: <span id="final-score">0</span></p>
+            <button id="restart-btn">Try Again</button>
+        </div>
+        <div class="win-screen hidden" id="win-screen">
+            <h1>You Win!</h1>
+            <p>Score: 200+</p>
+            <p class="win-emoji">🎉🏄🥊🏆</p>
+            <button id="play-again-btn">Surfing Again?</button>
+        </div>
+
+        <!-- Christmas Surprise Container -->
+        <div id="surprise-container" class="hidden">
+            <div class="gift-box-container">
+                <div class="christmas-star">
+                    <svg viewBox="0 0 24 24" fill="gold" width="100%" height="100%">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                </div>
+                <div class="gift-box">
+                    <div class="gift-lid">
+                        <div class="ribbon-horizontal"></div>
+                        <div class="ribbon-vertical"></div>
+                    </div>
+                    <div class="gift-body">
+                        <div class="ribbon-vertical-body"></div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="merry-text" id="surprise-message">Merry Christmas!</h1>
+            <button id="gift-play-again-btn">Play Again</button>
+        </div>
+
+        <div class="kangaroo" id="kangaroo"></div>
+        <div class="waves-container" id="waves-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

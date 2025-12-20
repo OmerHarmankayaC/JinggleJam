@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the Reindeer!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="game-container">
+        <!-- Background Layer -->
+        <div class="background-layer"></div>
+
+        <!-- Operator Section -->
+        <div class="operator-section">
+            <div class="speech-bubble" id="speech-bubble">
+                Welcome! Find the Gingerbread Man! 🍪
+            </div>
+            <img src="assets/operator_neutral.png" alt="Host" class="operator-img" id="operator-img">
+        </div>
+
+        <!-- Game Stage -->
+        <div class="stage">
+            <div class="boxes-container">
+                <div class="box-wrapper" data-id="0">
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="item hidden"></div>
+                    <div class="star-effect"></div>
+                </div>
+                <div class="box-wrapper" data-id="1">
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="item hidden"></div>
+                    <div class="star-effect"></div>
+                </div>
+                <div class="box-wrapper" data-id="2">
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="item hidden"></div>
+                    <div class="star-effect"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HUD / Controls -->
+        <div class="hud">
+            <div class="score-board">Score: <span id="score">0</span></div>
+            <button id="start-btn" class="btn-primary">Start Game</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+/* ReindeerOverlay.css */
+.reindeer-container {
+    position: absolute;
+    bottom: -20px;
+    /* Slight offset to look like walking on bottom edge */
+    left: 0;
+    width: 200px;
+    /* Increased size */
+    height: 150px;
+    z-index: 50;
+    pointer-events: none;
+    animation: moveAcross 25s linear infinite;
+    transform: translateX(-100%);
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes moveAcross {
+    0% {
+        left: -200px;
+        transform: scaleX(1);
+    }
+
+    100% {
+        left: 100vw;
+        transform: scaleX(1);
+    }
+}
+
+/* Leg Animations */
+/* We need to set transform origins based on where lines attach to body approximately */
+/* Coordinate system is SVG 0-200, 0-150 */
+
+.leg {
+    transform-box: fill-box;
+    transform-origin: top center;
+}
+
+/* Quadruped Walk Cycle */
+/* 
+LF (Left Front) & RB (Right Back) move together
+RF (Right Front) & LB (Left Back) move together
+But usually offset slightly for realism
+*/
+
+.leg-front-left {
+    animation: walkCycle 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.leg-back-right {
+    animation: walkCycle 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1) 0.1s;
+}
+
+.leg-front-right {
+    animation: walkCycle 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1) 0.6s;
+}
+
+.leg-back-left {
+    animation: walkCycle 1.2s infinite cubic-bezier(0.4, 0, 0.6, 1) 0.7s;
+}
+
+@keyframes walkCycle {
+    0% {
+        transform: rotate(20deg);
+    }
+
+    50% {
+        transform: rotate(-20deg);
+    }
+
+    100% {
+        transform: rotate(20deg);
+    }
+}
+
+/* Head Bob */
+.neck-head {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    animation: headBob 2.4s infinite ease-in-out;
+}
+
+@keyframes headBob {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Scarf gentle swing */
+.tail {
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: tailWag 1s infinite ease-in-out;
+}
+
+@keyframes tailWag {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+}
