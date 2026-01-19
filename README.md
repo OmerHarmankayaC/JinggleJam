@@ -1,5 +1,13 @@
-# 🎉 JinggleJam
 
+## Important Note
+
+This whole web-site project was made completely with Google's **Antigravity AI IDE** with minimal to no human code writing!
+
+This README file was written by chatGPT!
+
+The project was developed for a vibe-coding and prompt-engineering contest organized by GDG on Campus TED University.
+
+# 🎉 JinggleJam
 **JinggleJam** is a fun, interactive **New Year–themed website** created as part of a **school society competition project**.  
 The website allows users to play a collection of festive **mini games**, combining celebration, creativity, and interactive web design.
 
