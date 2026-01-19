@@ -38,8 +38,6 @@ JinggleJam/
 ├── vite.config.ts # Vite configuration
 └── README.md # Project documentation
 
-yaml
-Kodu kopyala
 
 ---
 
@@ -52,41 +50,35 @@ Kodu kopyala
 ### Installation
 
 1. Clone the repository:
-   ```bash
+   ```
    git clone https://github.com/OmerHarmankayaC/JinggleJam.git
 Navigate to the project directory:
 
-bash
-Kodu kopyala
+
 cd JinggleJam
 Install dependencies:
 
-bash
-Kodu kopyala
+
 npm install
 👨‍💻 Development
 Start the development server:
 
-bash
-Kodu kopyala
+
 npm run dev
 Open your browser at:
 
-arduino
-Kodu kopyala
+
 http://localhost:5173
 The app supports Hot Module Replacement (HMR) for instant updates.
 
 📦 Build for Production
 Create an optimized build:
 
-bash
-Kodu kopyala
+
 npm run build
 Preview the production build locally:
 
-bash
-Kodu kopyala
+
 npm run preview
 🎯 Project Purpose
 This project was developed for a school society competition, focusing on:
@@ -101,9 +93,11 @@ Practical use of modern front-end technologies
 This project does not currently include a license.
 Add one if reuse or distribution is intended.
 
-👤 Author
-Ömer Harmankaya
+👤 Authors
+- Abdülkadir Karakuş
+- Eylül Akpınar
+- Kıvanç Ünaldı
+- Ömer Harmankaya
 
-GitHub: @OmerHarmankayaC
 
 🎊 Happy New Year & enjoy the games! 🎊
